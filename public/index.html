@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CourseCraft</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-left">
+      <div class="logo">
+        <svg class="logo-mark" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="5" cy="6" r="2.5" stroke="currentColor" stroke-width="1.5"/><circle cx="19" cy="18" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M7 7.5C10 10 14 10 14 14s-4 3-7 5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="1.5" fill="currentColor" opacity="0.5"/></svg>
+        <span class="logo-text">CourseCraft</span>
+      </div>
+    </div>
+    <div class="header-center">
+      <nav class="tab-nav" id="tabNav">
+        <div class="tab-indicator" id="tabIndicator"></div>
+        <button class="tab-btn active" data-tab="scheduler">Schedule</button>
+        <button class="tab-btn" data-tab="catalog">Catalog</button>
+        <button class="tab-btn" data-tab="friends">Friends</button>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="user-section" id="userSection">
+        <button class="btn btn-ghost" id="loginBtn">Sign In</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="modal-overlay" id="loginModal">
+    <div class="modal">
+      <h2>Sign in to CourseCraft</h2>
+      <p class="modal-subtitle">Save your schedule and coordinate with friends</p>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="regUsername" placeholder="jsmith2026" class="input">
+      </div>
+      <div class="form-group">
+        <label>Display Name</label>
+        <input type="text" id="regDisplayName" placeholder="John Smith" class="input">
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="closeLoginModal">Cancel</button>
+        <button class="btn btn-primary" id="registerBtn">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="profModal">
+    <div class="modal modal-prof">
+      <button class="modal-close" id="closeProfModal">&times;</button>
+      <div id="profModalContent"></div>
+    </div>
+  </div>
+
+  <main class="main">
+    <div class="tab-content active" id="tab-scheduler">
+      <div class="scheduler-layout">
+        <div class="panel chat-panel">
+          <div class="panel-header">
+            <h3>Planner</h3>
+            <span class="panel-hint">natural language</span>
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-message system">
+              <div class="message-bubble onboarding">
+                <div class="onboarding-title">What kind of schedule do you want?</div>
+                <div class="onboarding-grid">
+                  <button class="onboarding-card" onclick="sendQuick('I want morning classes with the best professors')">
+                    <span class="ob-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></span>
+                    <span class="ob-label">Morning<br><small>Best professors</small></span>
+                  </button>
+                  <button class="onboarding-card" onclick="sendQuick('I want afternoon classes spread out')">
+                    <span class="ob-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v1M18.36 5.64l-.71.71M21 12h-1M18.36 18.36l-.71-.71M12 20v1M5.64 18.36l.71-.71M3 12h1M5.64 5.64l.71.71"/><circle cx="12" cy="12" r="4"/></svg></span>
+                    <span class="ob-label">Afternoon<br><small>Spread out</small></span>
+                  </button>
+                  <button class="onboarding-card" onclick="sendQuick('I want compact classes with minimal walking')">
+                    <span class="ob-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+                    <span class="ob-label">Compact<br><small>Minimal walking</small></span>
+                  </button>
+                  <button class="onboarding-card" onclick="sendQuick('List available courses')">
+                    <span class="ob-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+                    <span class="ob-label">Browse<br><small>All courses</small></span>
+                  </button>
+                </div>
+                <p class="onboarding-hint">Or type anything &mdash; "Add CS101, MATH201" or "Generate my schedule"</p>
+              </div>
+            </div>
+          </div>
+          <div class="chat-input-area">
+            <form class="chat-form" id="chatForm">
+              <input type="text" id="chatInput" placeholder='Try "I need CS101 and MATH201, morning classes"' class="input chat-input" autocomplete="off">
+              <button type="submit" class="btn btn-primary btn-send">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div class="panel schedule-panel">
+          <div class="panel-header">
+            <h3>Weekly View</h3>
+            <div class="schedule-controls">
+              <span class="credit-badge" id="totalCredits">0 credits</span>
+            </div>
+          </div>
+          <div class="schedule-grid-wrapper">
+            <div class="schedule-grid" id="scheduleGrid"></div>
+            <div class="schedule-empty" id="scheduleEmpty">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.1"><rect x="3" y="4" width="18" height="18" rx="3"/><path d="M16 2v4M8 2v4M3 9h18"/><rect x="7" y="12" width="3" height="3" rx="1" opacity="0.5"/><rect x="12" y="12" width="3" height="3" rx="1"/></svg>
+              <p>Your schedule will appear here</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel sidebar-panel">
+          <div class="sidebar-section">
+            <h4 class="sidebar-title">Preferences</h4>
+            <div class="pref-toggles">
+              <label class="pref-toggle"><input type="checkbox" id="prefMorning"><span>Morning classes</span></label>
+              <label class="pref-toggle"><input type="checkbox" id="prefAfternoon"><span>Afternoon classes</span></label>
+              <label class="pref-toggle"><input type="checkbox" id="prefSpread"><span>Spread out</span></label>
+              <label class="pref-toggle"><input type="checkbox" id="prefCompact"><span>Back-to-back</span></label>
+              <label class="pref-toggle"><input type="checkbox" id="prefWalking"><span>Minimize walking</span></label>
+              <label class="pref-toggle"><input type="checkbox" id="prefRMP"><span>Top-rated professors</span></label>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h4 class="sidebar-title">Courses <span class="course-count" id="courseCount">0</span></h4>
+            <div class="course-cart" id="courseCart">
+              <div class="empty-cart">
+                <p>No courses yet</p>
+                <small>Use the planner or browse the catalog</small>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-full btn-generate" id="generateBtn" disabled>Generate Schedule</button>
+          </div>
+
+          <div class="sidebar-section" id="resultsSection" style="display:none">
+            <h4 class="sidebar-title">Results</h4>
+            <div id="scheduleResults"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-catalog">
+      <div class="catalog-layout">
+        <div class="catalog-header">
+          <div>
+            <h2>Course Catalog</h2>
+            <p class="catalog-subtitle">Spring 2026 &middot; 21 courses &middot; 48 sections</p>
+          </div>
+          <div class="catalog-filters">
+            <div class="search-wrapper">
+              <svg class="search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input type="text" id="catalogSearch" placeholder="Search..." class="input search-input">
+            </div>
+            <select id="deptFilter" class="input select">
+              <option value="">All Depts</option>
+              <option value="CS">Computer Science</option>
+              <option value="MATH">Mathematics</option>
+              <option value="ENG">Engineering</option>
+              <option value="BUS">Business</option>
+              <option value="SCI">Sciences</option>
+              <option value="HUM">Humanities</option>
+              <option value="ART">Arts</option>
+              <option value="HSC">Health Sciences</option>
+            </select>
+          </div>
+        </div>
+        <div class="catalog-grid" id="catalogGrid"></div>
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-friends">
+      <div class="friends-layout">
+        <div class="friends-sidebar">
+          <h3>Friends</h3>
+          <p class="text-muted">See who's in your classes</p>
+          <p class="text-muted" id="friendsLoginMsg" style="display:none;margin-top:12px">Sign in to add friends</p>
+          <div id="addFriendSection" style="display:none;margin-top:14px">
+            <div class="form-group">
+              <input type="text" id="friendUsernameInput" placeholder="Username" class="input">
+              <button class="btn btn-primary btn-full" id="addFriendBtn" style="margin-top:6px">Add Friend</button>
+            </div>
+          </div>
+          <div class="friends-list" id="friendsList">
+            <div class="empty-friends">
+              <p>No friends yet</p>
+              <small>Add friends to compare schedules</small>
+            </div>
+          </div>
+        </div>
+        <div class="friends-schedule">
+          <div class="comparison-empty" id="comparisonEmpty">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.7" opacity="0.15"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            <p>Select a friend to see their schedule</p>
+          </div>
+          <div id="comparisonContent" style="display:none">
+            <div class="comparison-header" id="comparisonHeader"></div>
+            <div class="comparison-courses" id="comparisonCourses"></div>
+            <div class="comparison-grid-wrapper">
+              <div class="schedule-grid" id="comparisonGrid"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="app.js"></script>
+</body>
+</html>
