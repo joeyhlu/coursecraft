@@ -1,7 +1,7 @@
 {
   "name": "coursecraft",
   "version": "1.0.0",
-  "description": "AI-powered course scheduling assistant - never fight for class slots again",
+  "description": "Smart course scheduling assistant - never fight for class slots again",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
